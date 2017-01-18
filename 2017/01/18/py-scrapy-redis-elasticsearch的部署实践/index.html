@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="python,scrapy,redis,elasticsearch," />
 
 
 
@@ -84,12 +84,25 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xinuo">
-<meta property="og:url" content="http://xinuo.github.io/index.html">
+<meta name="description" content="py-scrapy-redis-elasticsearch的部署实践
+由于公司项目需要，需要用到python-scrapy-redis-elasticsearch这种分布式爬虫的技术栈，所以现在将整个安装，部署步骤一一记录下来。方便自己或者有相同需要的人。
+1. 前言：1.1 作用其实，对于了解过爬虫项目的人来说，python-scrapy已经比较成熟的爬虫框架。它能简单快捷地部署爬虫框架，并通过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="py-scrapy-redis-elasticsearch的部署实践">
+<meta property="og:url" content="http://xinuo.github.io/2017/01/18/py-scrapy-redis-elasticsearch的部署实践/index.html">
 <meta property="og:site_name" content="Xinuo">
+<meta property="og:description" content="py-scrapy-redis-elasticsearch的部署实践
+由于公司项目需要，需要用到python-scrapy-redis-elasticsearch这种分布式爬虫的技术栈，所以现在将整个安装，部署步骤一一记录下来。方便自己或者有相同需要的人。
+1. 前言：1.1 作用其实，对于了解过爬虫项目的人来说，python-scrapy已经比较成熟的爬虫框架。它能简单快捷地部署爬虫框架，并通过">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/%E6%95%99%E7%A8%8BQQ%E6%88%AA%E5%9B%BE20170117235931.png">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/%E6%95%99%E7%A8%8BQQ%E6%88%AA%E5%9B%BE20170118004610.png">
+<meta property="og:updated_time" content="2017-01-18T09:21:04.361Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xinuo">
+<meta name="twitter:title" content="py-scrapy-redis-elasticsearch的部署实践">
+<meta name="twitter:description" content="py-scrapy-redis-elasticsearch的部署实践
+由于公司项目需要，需要用到python-scrapy-redis-elasticsearch这种分布式爬虫的技术栈，所以现在将整个安装，部署步骤一一记录下来。方便自己或者有相同需要的人。
+1. 前言：1.1 作用其实，对于了解过爬虫项目的人来说，python-scrapy已经比较成熟的爬虫框架。它能简单快捷地部署爬虫框架，并通过">
+<meta name="twitter:image" content="http://od5y2z5kt.bkt.clouddn.com/%E6%95%99%E7%A8%8BQQ%E6%88%AA%E5%9B%BE20170117235931.png">
 
 
 
@@ -117,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://xinuo.github.io/"/>
+  <link rel="canonical" href="http://xinuo.github.io/2017/01/18/py-scrapy-redis-elasticsearch的部署实践/"/>
 
 
 
 
 
-  <title> Xinuo </title>
+  <title> py-scrapy-redis-elasticsearch的部署实践 | Xinuo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -154,9 +167,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -237,9 +248,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -272,10 +283,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/01/18/py-scrapy-redis-elasticsearch的部署实践/" itemprop="url">
-                  py-scrapy-redis-elasticsearch的部署实践
-                </a>
+                py-scrapy-redis-elasticsearch的部署实践
               
             
           </h1>
@@ -348,9 +356,7 @@
       
 
       
-        
-          
-            <h1 id="py-scrapy-redis-elasticsearch的部署实践"><a href="#py-scrapy-redis-elasticsearch的部署实践" class="headerlink" title="py-scrapy-redis-elasticsearch的部署实践"></a>py-scrapy-redis-elasticsearch的部署实践</h1><blockquote>
+        <h1 id="py-scrapy-redis-elasticsearch的部署实践"><a href="#py-scrapy-redis-elasticsearch的部署实践" class="headerlink" title="py-scrapy-redis-elasticsearch的部署实践"></a>py-scrapy-redis-elasticsearch的部署实践</h1><blockquote>
 <p>由于公司项目需要，需要用到python-scrapy-redis-elasticsearch这种<strong>分布式爬虫</strong>的技术栈，所以现在将整个安装，部署步骤一一记录下来。方便自己或者有相同需要的人。</p>
 <h2 id="1-前言："><a href="#1-前言：" class="headerlink" title="1. 前言："></a>1. 前言：</h2><h3 id="1-1-作用"><a href="#1-1-作用" class="headerlink" title="1.1 作用"></a>1.1 作用</h3><p>其实，对于了解过爬虫项目的人来说，python-scrapy已经比较成熟的爬虫框架。它能简单快捷地部署爬虫框架，并通过配置简单的参数，使用Xpath、CSS selector来捕获网页的元素，从而达到抓取，爬取的目的。<br>而加入了redis这种noSQL数据库后，可以使scrapy实现分布式的爬虫方案。<br>最后加入Elasticsearch(es)则是使爬取的数据实时记录在ES中，继而前端页面调用、分析等后续任务，是属于实时查询的过程。</p>
 </blockquote>
@@ -413,276 +419,68 @@
 <h3 id="2-5-Elasticsearch"><a href="#2-5-Elasticsearch" class="headerlink" title="2.5 Elasticsearch"></a>2.5 Elasticsearch</h3><h4 id="2-5-1-Elasticsearch下载安装"><a href="#2-5-1-Elasticsearch下载安装" class="headerlink" title="2.5.1 Elasticsearch下载安装"></a>2.5.1 Elasticsearch下载安装</h4><p>Elasticsearch的下载安装,建议查看过往的教程.<a href="http://" target="_blank" rel="external">教程</a>.</p>
 <h3 id="2-6-教程结尾"><a href="#2-6-教程结尾" class="headerlink" title="2.6 教程结尾"></a>2.6 教程结尾</h3><p>python-scrapy-redis-elasticsearch的部署实践教程到这里已经结束.后面将会提供实际的例子来展示这技术栈如何爬取网站.</p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://xinuo.github.io/2017/01/16/第二篇测试/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Cry Rain">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Xinuo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Xinuo" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/16/第二篇测试/" itemprop="url">
-                  第二篇测试
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T15:58:00+08:00">
-                2017-01-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/python/" rel="tag"># python</a>
           
-            
+            <a href="/tags/scrapy/" rel="tag"># scrapy</a>
           
-
+            <a href="/tags/redis/" rel="tag"># redis</a>
           
-
+            <a href="/tags/elasticsearch/" rel="tag"># elasticsearch</a>
           
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h4 id="第二篇测试"><a href="#第二篇测试" class="headerlink" title="第二篇测试."></a>第二篇测试.</h4><h5 id="添加Hexo-admin管理界面"><a href="#添加Hexo-admin管理界面" class="headerlink" title="添加Hexo-admin管理界面"></a>添加Hexo-admin管理界面</h5><p>1.使用Hexo-admin实现了管理界面的可视化.这样方便自己编写博文.<br>安装方法如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cnpm install hexo-admin-qiniu --save</div><div class="line">#编辑_config.yml</div><div class="line">#添加以下内容:</div><div class="line">admin:</div><div class="line">  qiniuCfg:</div><div class="line">      AccessKey: &apos;your qiniu AK&apos;</div><div class="line">      SecretKey: &apos;your qiniu SK&apos;</div><div class="line">      BucketName: &apos;your BK Name&apos;</div><div class="line">      bucketHost: &apos;you BK Host&apos;</div></pre></td></tr></table></figure></p>
-<p>然后就可以完成了.<br>访问localhost:4000/admin即可实现编写,发布等功能.</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://xinuo.github.io/2017/01/16/HelloWorld/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Cry Rain">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Xinuo">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Xinuo" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/01/16/第二篇测试/" rel="next" title="第二篇测试">
+                <i class="fa fa-chevron-left"></i> 第二篇测试
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2017/01/16/HelloWorld/" itemprop="url">
-                  第一篇
-                </a>
-              
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T00:55:04+08:00">
-                2017-01-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 id="这是用Hexo-Github写的第一篇博文"><a href="#这是用Hexo-Github写的第一篇博文" class="headerlink" title="这是用Hexo+Github写的第一篇博文."></a>这是用Hexo+Github写的第一篇博文.</h1><p>其实之前一直也是想好好写写blog,但是总是拖延症发作.现在应该能好好写了吧.<br>未来,在这里会书写关于GeneDown的用法,技术路线,以及开发日志.<br>At 2017-01-16 13:55<br>Xino</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -690,6 +488,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -709,8 +511,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -777,6 +588,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#py-scrapy-redis-elasticsearch的部署实践"><span class="nav-number">1.</span> <span class="nav-text">py-scrapy-redis-elasticsearch的部署实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前言："><span class="nav-number">1.1.</span> <span class="nav-text">1. 前言：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-作用"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-系统环境"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 系统环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-下载安装步骤"><span class="nav-number">1.2.</span> <span class="nav-text">2. 下载安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Python"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Python</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-Python下载"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">2.1.1 Python下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-Python安装"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">2.1.2 Python安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-pycharm"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 pycharm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-pycharm下载"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">2.2.1 pycharm下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-pycharm安装"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2.2.2 pycharm安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-新建一个python项目"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">2.2.3 新建一个python项目</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-scrapy"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 scrapy</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-0-pip的配置"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">2.3.0 pip的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-scrapy下载安装"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">2.3.1 scrapy下载安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-Scrapy-tutorial"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">2.3.2 Scrapy tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-1-目录结构"><span class="nav-number">1.2.3.3.1.</span> <span class="nav-text">2.3.2.1 目录结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-2-定义Item"><span class="nav-number">1.2.3.3.2.</span> <span class="nav-text">2.3.2.2 定义Item</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-3-我们的第一个爬虫-Spider"><span class="nav-number">1.2.3.3.3.</span> <span class="nav-text">2.3.2.3 我们的第一个爬虫(Spider)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-3-运行"><span class="nav-number">1.2.3.3.4.</span> <span class="nav-text">2.3.2.3 运行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-4-scrapy结束"><span class="nav-number">1.2.3.3.5.</span> <span class="nav-text">2.3.2.4 scrapy结束</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-redis"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-redis的下载安装："><span class="nav-number">1.2.4.1.</span> <span class="nav-text">2.4.1 redis的下载安装：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-redis的运行："><span class="nav-number">1.2.4.2.</span> <span class="nav-text">2.4.2 redis的运行：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#server"><span class="nav-number">1.2.4.2.1.</span> <span class="nav-text">server:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#client"><span class="nav-number">1.2.4.2.2.</span> <span class="nav-text">client:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-Elasticsearch"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 Elasticsearch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-1-Elasticsearch下载安装"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">2.5.1 Elasticsearch下载安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-教程结尾"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.6 教程结尾</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -876,6 +703,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
@@ -907,6 +738,10 @@
 
   
 
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
   
 
 
