@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+    
+  <url>
+    <loc>http://xinuo.github.io/2017/01/18/py-scrapy-redis-elasticsearch%E7%9A%84%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5/</loc>
+    <lastmod>2017-01-19T02:19:57.301Z</lastmod>
+    <data>
+        <display>
+        <title>py-scrapy-redis-elasticsearch的部署实践</title>
+        <pubTime>2017-01-18T09:06:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>scrapy</tag>
+         
+        <tag>redis</tag>
+         
+        <tag>elasticsearch</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://xinuo.github.io/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://xinuo.github.io/2017/01/16/%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%B5%8B%E8%AF%95/</loc>
+    <lastmod>2017-01-16T09:21:44.676Z</lastmod>
+    <data>
+        <display>
+        <title>第二篇测试</title>
+        <pubTime>2017-01-16T07:58:00.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>http://xinuo.github.io/2017/01/16/HelloWorld/</loc>
+    <lastmod>2017-01-16T07:25:00.529Z</lastmod>
+    <data>
+        <display>
+        <title>第一篇</title>
+        <pubTime>2017-01-15T16:55:04.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+</urlset>
