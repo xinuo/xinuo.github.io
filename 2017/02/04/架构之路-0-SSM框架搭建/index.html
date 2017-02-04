@@ -84,16 +84,49 @@
 
 
 
-<meta name="description" content="第二篇测试.添加Hexo-admin管理界面1.使用Hexo-admin实现了管理界面的可视化.这样方便自己编写博文.安装方法如下:123456789cnpm install hexo-admin-qiniu --save#编辑_config.yml#添加以下内容:admin:  qiniuCfg:      AccessKey: &amp;apos;your qiniu AK&amp;apos;      Se">
+<meta name="description" content="架构之路(0)-SSM框架搭建
+SSM:Spring+SpringMVC+MyBatis  
+环境配置(仅我自己的配置,可以参考)JDK1.7+Eclipse neongit客户端/Eclipse的egit插件Maven/Eclipse的Maven插件Tomcat
+
+安装必要组件安装jdk1.7+具体jdk的安装以及配置环境变量就不多说了.相信作为java开发者这是基本功夫.
+安装Eclipse安">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第二篇测试">
-<meta property="og:url" content="http://xinuo.github.io/2017/01/16/第二篇测试/index.html">
+<meta property="og:title" content="架构之路(0)-SSM框架搭建">
+<meta property="og:url" content="http://xinuo.github.io/2017/02/04/架构之路-0-SSM框架搭建/index.html">
 <meta property="og:site_name" content="Xinuo">
-<meta property="og:description" content="第二篇测试.添加Hexo-admin管理界面1.使用Hexo-admin实现了管理界面的可视化.这样方便自己编写博文.安装方法如下:123456789cnpm install hexo-admin-qiniu --save#编辑_config.yml#添加以下内容:admin:  qiniuCfg:      AccessKey: &amp;apos;your qiniu AK&amp;apos;      Se">
-<meta property="og:updated_time" content="2017-01-16T09:21:44.676Z">
+<meta property="og:description" content="架构之路(0)-SSM框架搭建
+SSM:Spring+SpringMVC+MyBatis  
+环境配置(仅我自己的配置,可以参考)JDK1.7+Eclipse neongit客户端/Eclipse的egit插件Maven/Eclipse的Maven插件Tomcat
+
+安装必要组件安装jdk1.7+具体jdk的安装以及配置环境变量就不多说了.相信作为java开发者这是基本功夫.
+安装Eclipse安">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/lotaqihqajwoio35w9z0lzphgs">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/1uclkwphyzyl9np6p6cm3qysb8">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/dnfjiuriq5ercqi1bqgklsky7c">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/aeymwtgevwl3v02m1bear3jntl">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/d52byoazb143lhfda9tujy7b86">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/8hewek9s1ai44u34neq7o9zmtp">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/yg6429jxfo2vcw6di3740c08n6">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/b2585lc9jl5ygozpdkg57o0b69">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/3550lywyhy5cxrqs2o6j7ttg6w">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/10s47l08pp8feqbwz484etmvds">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/0n0p44ycmaa69xuf1v85g47qj8">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/8q6jt653ehqb8aroha1d5938to">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/bpgrwrzfqqgtjz0cg0u3lxo2wk">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/dm6r9skaye653uvc4q576c4djp">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/10efwe9uunty5v8u2g676g78op">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/c73gjl1p4vlom8dmo5hw2v2p5x">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/m9xsrkexvn30xiary9w9hg57uy">
+<meta property="og:updated_time" content="2017-02-04T06:46:53.994Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="第二篇测试">
-<meta name="twitter:description" content="第二篇测试.添加Hexo-admin管理界面1.使用Hexo-admin实现了管理界面的可视化.这样方便自己编写博文.安装方法如下:123456789cnpm install hexo-admin-qiniu --save#编辑_config.yml#添加以下内容:admin:  qiniuCfg:      AccessKey: &amp;apos;your qiniu AK&amp;apos;      Se">
+<meta name="twitter:title" content="架构之路(0)-SSM框架搭建">
+<meta name="twitter:description" content="架构之路(0)-SSM框架搭建
+SSM:Spring+SpringMVC+MyBatis  
+环境配置(仅我自己的配置,可以参考)JDK1.7+Eclipse neongit客户端/Eclipse的egit插件Maven/Eclipse的Maven插件Tomcat
+
+安装必要组件安装jdk1.7+具体jdk的安装以及配置环境变量就不多说了.相信作为java开发者这是基本功夫.
+安装Eclipse安">
+<meta name="twitter:image" content="http://od5y2z5kt.bkt.clouddn.com/lotaqihqajwoio35w9z0lzphgs">
 
 
 
@@ -121,13 +154,13 @@
 
 
 
-  <link rel="canonical" href="http://xinuo.github.io/2017/01/16/第二篇测试/"/>
+  <link rel="canonical" href="http://xinuo.github.io/2017/02/04/架构之路-0-SSM框架搭建/"/>
 
 
 
 
 
-  <title> 第二篇测试 | Xinuo </title>
+  <title> 架构之路(0)-SSM框架搭建 | Xinuo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +303,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://xinuo.github.io/2017/01/16/第二篇测试/">
+  <link itemprop="mainEntityOfPage" href="http://xinuo.github.io/2017/02/04/架构之路-0-SSM框架搭建/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Cry Rain">
@@ -294,7 +327,7 @@
             
             
               
-                第二篇测试
+                架构之路(0)-SSM框架搭建
               
             
           </h1>
@@ -309,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T15:58:00+08:00">
-                2017-01-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-04T11:26:00+08:00">
+                2017-02-04
               </time>
             
 
@@ -319,6 +352,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/架构之路/" itemprop="url" rel="index">
+                    <span itemprop="name">架构之路</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -345,8 +400,18 @@
       
 
       
-        <h4 id="第二篇测试"><a href="#第二篇测试" class="headerlink" title="第二篇测试."></a>第二篇测试.</h4><h5 id="添加Hexo-admin管理界面"><a href="#添加Hexo-admin管理界面" class="headerlink" title="添加Hexo-admin管理界面"></a>添加Hexo-admin管理界面</h5><p>1.使用Hexo-admin实现了管理界面的可视化.这样方便自己编写博文.<br>安装方法如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cnpm install hexo-admin-qiniu --save</div><div class="line">#编辑_config.yml</div><div class="line">#添加以下内容:</div><div class="line">admin:</div><div class="line">  qiniuCfg:</div><div class="line">      AccessKey: &apos;your qiniu AK&apos;</div><div class="line">      SecretKey: &apos;your qiniu SK&apos;</div><div class="line">      BucketName: &apos;your BK Name&apos;</div><div class="line">      bucketHost: &apos;you BK Host&apos;</div></pre></td></tr></table></figure></p>
-<p>然后就可以完成了.<br>访问localhost:4000/admin即可实现编写,发布等功能.</p>
+        <h1 id="架构之路-0-SSM框架搭建"><a href="#架构之路-0-SSM框架搭建" class="headerlink" title="架构之路(0)-SSM框架搭建"></a>架构之路(0)-SSM框架搭建</h1><blockquote>
+<p>SSM:Spring+SpringMVC+MyBatis  </p>
+<p><strong>环境配置</strong>(仅我自己的配置,可以参考)<br>JDK1.7+<br>Eclipse neon<br>git客户端/Eclipse的egit插件<br>Maven/Eclipse的Maven插件<br>Tomcat</p>
+</blockquote>
+<h2 id="安装必要组件"><a href="#安装必要组件" class="headerlink" title="安装必要组件"></a>安装必要组件</h2><h3 id="安装jdk1-7"><a href="#安装jdk1-7" class="headerlink" title="安装jdk1.7+"></a>安装jdk1.7+</h3><p>具体jdk的安装以及配置环境变量就不多说了.相信作为java开发者这是基本功夫.</p>
+<h3 id="安装Eclipse"><a href="#安装Eclipse" class="headerlink" title="安装Eclipse"></a>安装Eclipse</h3><p>安装Eclipse的步骤也不叙述.直接安装好新版本的Eclipse,会自带git以及Maven的配置.具体可以看下图.<br><img src="http://od5y2z5kt.bkt.clouddn.com/lotaqihqajwoio35w9z0lzphgs" alt="paste image">  </p>
+<h2 id="导入github上的ssm框架项目"><a href="#导入github上的ssm框架项目" class="headerlink" title="导入github上的ssm框架项目."></a>导入github上的ssm框架项目.</h2><p>在项目右键选取<strong>Import</strong>-&gt;<strong>Import Projects from Git</strong><br><img src="http://od5y2z5kt.bkt.clouddn.com/1uclkwphyzyl9np6p6cm3qysb8" alt="paste image"><br>假如没有新的git库的话,这里选择Clone Uri<br><img src="http://od5y2z5kt.bkt.clouddn.com/dnfjiuriq5ercqi1bqgklsky7c" alt="paste image"><br>然后复制<br><a href="https://github.com/Javen205/SSM.git" target="_blank" rel="external">https://github.com/Javen205/SSM.git</a>  填充到uri中<br><img src="http://od5y2z5kt.bkt.clouddn.com/aeymwtgevwl3v02m1bear3jntl" alt="paste image"><br>选择分支branch<br><img src="http://od5y2z5kt.bkt.clouddn.com/d52byoazb143lhfda9tujy7b86" alt="paste image"><br>选择你想放置的目录地址.<br><img src="http://od5y2z5kt.bkt.clouddn.com/8hewek9s1ai44u34neq7o9zmtp" alt="paste image"><br>选择导入已有的Eclipse项目<br><img src="http://od5y2z5kt.bkt.clouddn.com/yg6429jxfo2vcw6di3740c08n6" alt="paste image"><br><strong>Finish</strong>!</p>
+<p>然后导入进去后,会发现Maven会自动导入依赖包<br><img src="http://od5y2z5kt.bkt.clouddn.com/b2585lc9jl5ygozpdkg57o0b69" alt="paste image"><br>假如Maven导入出错,可以设置使用新版本的Maven.<br>修改Eclipse配置<br><img src="http://od5y2z5kt.bkt.clouddn.com/3550lywyhy5cxrqs2o6j7ttg6w" alt="paste image"><br>修改成Maven配置,确定.<br><img src="http://od5y2z5kt.bkt.clouddn.com/10s47l08pp8feqbwz484etmvds" alt="paste image"><br>这样导入就完成了.</p>
+<h2 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h2><h3 id="修改jdbc-properties"><a href="#修改jdbc-properties" class="headerlink" title="修改jdbc.properties"></a>修改jdbc.properties</h3><p>把jdbc.properties中url地址修改成你自己的mysql路径,这样就可以运行了.</p>
+<h3 id="添加Tomcat-Server"><a href="#添加Tomcat-Server" class="headerlink" title="添加Tomcat Server"></a>添加Tomcat Server</h3><p><img src="http://od5y2z5kt.bkt.clouddn.com/0n0p44ycmaa69xuf1v85g47qj8" alt="paste image"><br>因为Eclipse是刚安装完,所以需要新建一个新的Tomcat服务器这里采用tomcat8.0</p>
+<p><img src="http://od5y2z5kt.bkt.clouddn.com/8q6jt653ehqb8aroha1d5938to" alt="paste image"><br>选择本地的tomcat,完成.<br>最后在tomcat添加ssm项目<br><img src="http://od5y2z5kt.bkt.clouddn.com/bpgrwrzfqqgtjz0cg0u3lxo2wk" alt="paste image"><br><img src="http://od5y2z5kt.bkt.clouddn.com/dm6r9skaye653uvc4q576c4djp" alt="paste image"><br>Finish</p>
+<h3 id="Trouble-Shoot"><a href="#Trouble-Shoot" class="headerlink" title="Trouble Shoot"></a>Trouble Shoot</h3><p>经常部署项目适合会发现找不到类,此时需要将Maven的路径部署在项目路径上.对项目右键-&gt;Properties-&gt;Deployment Assembly-&gt;Add-&gt;Java Build Path Entrieds-&gt;Maven 依赖-&gt;添加到项目的路径上<br><img src="http://od5y2z5kt.bkt.clouddn.com/10efwe9uunty5v8u2g676g78op" alt="paste image"><br>添加成功后启动项目.<br><img src="http://od5y2z5kt.bkt.clouddn.com/c73gjl1p4vlom8dmo5hw2v2p5x" alt="paste image"><br>启动成功后访问:<br><a href="http://localhost:8080/Maven02/" target="_blank" rel="external">http://localhost:8080/Maven02/</a><br>看到<strong>Hello World!</strong>则部署成功.<br><img src="http://od5y2z5kt.bkt.clouddn.com/m9xsrkexvn30xiary9w9hg57uy" alt="paste image"></p>
 
       
     </div>
@@ -373,8 +438,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/16/HelloWorld/" rel="next" title="第一篇">
-                <i class="fa fa-chevron-left"></i> 第一篇
+              <a href="/2017/01/18/py-scrapy-redis-elasticsearch的部署实践/" rel="next" title="py-scrapy-redis-elasticsearch的部署实践">
+                <i class="fa fa-chevron-left"></i> py-scrapy-redis-elasticsearch的部署实践
               </a>
             
           </div>
@@ -382,10 +447,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/18/py-scrapy-redis-elasticsearch的部署实践/" rel="prev" title="py-scrapy-redis-elasticsearch的部署实践">
-                py-scrapy-redis-elasticsearch的部署实践 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -519,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#第二篇测试"><span class="nav-number">1.</span> <span class="nav-text">第二篇测试.</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#添加Hexo-admin管理界面"><span class="nav-number">1.1.</span> <span class="nav-text">添加Hexo-admin管理界面</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#架构之路-0-SSM框架搭建"><span class="nav-number">1.</span> <span class="nav-text">架构之路(0)-SSM框架搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装必要组件"><span class="nav-number">1.1.</span> <span class="nav-text">安装必要组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装jdk1-7"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装jdk1.7+</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Eclipse"><span class="nav-number">1.1.2.</span> <span class="nav-text">安装Eclipse</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入github上的ssm框架项目"><span class="nav-number">1.2.</span> <span class="nav-text">导入github上的ssm框架项目.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署项目"><span class="nav-number">1.3.</span> <span class="nav-text">部署项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改jdbc-properties"><span class="nav-number">1.3.1.</span> <span class="nav-text">修改jdbc.properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加Tomcat-Server"><span class="nav-number">1.3.2.</span> <span class="nav-text">添加Tomcat Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trouble-Shoot"><span class="nav-number">1.3.3.</span> <span class="nav-text">Trouble Shoot</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
