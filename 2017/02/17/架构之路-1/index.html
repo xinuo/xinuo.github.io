@@ -1,0 +1,760 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="架构之路,Nginx,Tomcat," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="0. 环境配置123OS:Ubuntu 14.0 LTS * 2NginxWebServer:Tomcat
+1. 前言在大型的网站上，绝对不可能只运行在一台服务器上，因为一台服务器并不能支撑海量的并发以及无法保证高可用。所以进行负载均衡以及故障转移是很有必要的。
+
+负载均衡:英文名称为Load Balance，其意思就是将请求分摊到多个操作单元上进行执行，例如Web服务器、FTP服务器、企业关键应">
+<meta property="og:type" content="article">
+<meta property="og:title" content="架构之路(1)-Nginx故障转移">
+<meta property="og:url" content="http://xinuo.github.io/2017/02/17/架构之路-1/index.html">
+<meta property="og:site_name" content="Xinuo">
+<meta property="og:description" content="0. 环境配置123OS:Ubuntu 14.0 LTS * 2NginxWebServer:Tomcat
+1. 前言在大型的网站上，绝对不可能只运行在一台服务器上，因为一台服务器并不能支撑海量的并发以及无法保证高可用。所以进行负载均衡以及故障转移是很有必要的。
+
+负载均衡:英文名称为Load Balance，其意思就是将请求分摊到多个操作单元上进行执行，例如Web服务器、FTP服务器、企业关键应">
+<meta property="og:image" content="http://od5y2z5kt.bkt.clouddn.com/6paz78b62jqjp1o1397c6k5dg6">
+<meta property="og:updated_time" content="2017-02-17T04:57:23.763Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="架构之路(1)-Nginx故障转移">
+<meta name="twitter:description" content="0. 环境配置123OS:Ubuntu 14.0 LTS * 2NginxWebServer:Tomcat
+1. 前言在大型的网站上，绝对不可能只运行在一台服务器上，因为一台服务器并不能支撑海量的并发以及无法保证高可用。所以进行负载均衡以及故障转移是很有必要的。
+
+负载均衡:英文名称为Load Balance，其意思就是将请求分摊到多个操作单元上进行执行，例如Web服务器、FTP服务器、企业关键应">
+<meta name="twitter:image" content="http://od5y2z5kt.bkt.clouddn.com/6paz78b62jqjp1o1397c6k5dg6">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xinuo.github.io/2017/02/17/架构之路-1/"/>
+
+
+
+
+
+  <title> 架构之路(1)-Nginx故障转移 | Xinuo </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?30b02f423920c48b3f3bced8617ccbaf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Xinuo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-python">
+          <a href="/categories/python/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-icon-circle"></i> <br />
+            
+            menu.python
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://xinuo.github.io/2017/02/17/架构之路-1/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cry Rain">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Xinuo">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Xinuo" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                架构之路(1)-Nginx故障转移
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-17T11:57:00+08:00">
+                2017-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/架构之路/" itemprop="url" rel="index">
+                    <span itemprop="name">架构之路</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="0-环境配置"><a href="#0-环境配置" class="headerlink" title="0. 环境配置"></a>0. 环境配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">OS:Ubuntu 14.0 LTS * 2</div><div class="line">Nginx</div><div class="line">WebServer:Tomcat</div></pre></td></tr></table></figure>
+<h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>在大型的网站上，绝对不可能只运行在一台服务器上，因为一台服务器并不能支撑海量的并发以及无法保证高可用。所以进行负载均衡以及故障转移是很有必要的。</p>
+<blockquote>
+<p><strong>负载均衡</strong>:英文名称为<strong>Load Balance</strong>，其意思就是将请求分摊到多个操作单元上进行执行，例如Web服务器、FTP服务器、企业关键应用服务器和其它关键任务服务器等，从而共同完成工作任务。<br><strong>故障转移</strong>:意思就是当一台服务器因故宕机时候,可以将所有的请求转移到另外一台可用的(备用的)服务器上,从而使业务不受宕机影响.     </p>
+</blockquote>
+<h2 id="2-安装-amp-配置"><a href="#2-安装-amp-配置" class="headerlink" title="2.安装&amp;配置"></a>2.安装&amp;配置</h2><h3 id="2-1-Nginx的安装"><a href="#2-1-Nginx的安装" class="headerlink" title="2.1 Nginx的安装"></a>2.1 Nginx的安装</h3><p>Ubuntu安装Nginx还是比较容易的.使用apt-get安装Nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install Nginx</div></pre></td></tr></table></figure></p>
+<p>然后访问<a href="http://ip/" target="_blank" rel="external">http://ip/</a><br>会显示如下提示.<br><img src="http://od5y2z5kt.bkt.clouddn.com/6paz78b62jqjp1o1397c6k5dg6" alt="paste image"><br>此时已经安装Nginx完毕.</p>
+<h3 id="2-2-配置故障转移"><a href="#2-2-配置故障转移" class="headerlink" title="2.2 配置故障转移."></a>2.2 配置故障转移.</h3><p>本节内容借鉴于<a href="http://blog.csdn.net/andong154564667/article/details/52121161" target="_blank" rel="external">此文章</a>  </p>
+<blockquote>
+<p>Nginx的upstream目前支持以下几种方式的分配<br>1、轮询（默认）<br>每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。<br>2、weight<br>指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况。<br>2、ip_hash<br>每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。<br>3、fair（第三方）<br>按后端服务器的响应时间来分配请求，响应时间短的优先分配。<br>4、url_hash（第三方）<br>按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。      </p>
+</blockquote>
+<h4 id="2-2-1-配置Nginx-conf"><a href="#2-2-1-配置Nginx-conf" class="headerlink" title="2.2.1 配置Nginx.conf"></a>2.2.1 配置Nginx.conf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">vi /etc/Nginx/Nginx.conf</div><div class="line"></div><div class="line"># 在http代码块里添加以下代码</div><div class="line">    upstream  gdown &#123;</div><div class="line">          # ip_hash;</div><div class="line">          server   127.0.0.1:8080 weight=10;</div><div class="line">#          server   172.16.125.76:8077 down;</div><div class="line">#          server   172.16.0.18:8066 max_fails=3 fail_timeout=30s;</div><div class="line">          server   x.x.x.x:8080 backup;</div><div class="line">     &#125;</div><div class="line">      </div><div class="line"></div><div class="line"></div><div class="line">     server &#123;</div><div class="line">        listen       80;</div><div class="line">        server_name  www.gdown.top;        </div><div class="line">       </div><div class="line">        location /&#123;</div><div class="line">           proxy_pass        http://gdown;</div><div class="line">           proxy_set_header   Host             $host;</div><div class="line">           proxy_set_header   X-Real-IP        $remote_addr;</div><div class="line">           proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;</div><div class="line">        &#125;      </div><div class="line">     &#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>当有请求到www.gdown.top 时请求会被分发到对应的upstream设置的服务器列表上。<br><strong>ip_hash</strong>意思是根据来访问ip的hashid来分发到指定的服务器，也就是说该IP的请求都是转到这个指定的服务器上。 但是我这边已经注释掉.因为ip_hash会与weight相冲突.<br>根据服务器的本身的性能差别及职能，可以设置不同的参数控制。<br><strong>down</strong> 表示负载过重或者不参与负载<br><strong>weight</strong> 权重过大代表承担的负载就越大 在上面配置中，每10个请求分配给127.0.0.1:8080，然后第11个请求会分配给x.x.x.x:8080，如此循环下去。<br><strong>backup</strong> 其它服务器时或down时才会请求backup服务器<br><strong>max_fails</strong> 失败超过指定次数会暂停或请求转往其它服务器<br><strong>fail_timeout</strong> 失败超过指定次数后暂停时间       </p>
+</blockquote>
+<p>根据以上设置,可以让请求大部分落在本机127.0.0.1:8080上.当服务器web应用进行更新,或者出意外down掉时,只要Nginx还存在,便会将请求转向x.x.x.x:8080</p>
+<h2 id="3-验证"><a href="#3-验证" class="headerlink" title="3.验证"></a>3.验证</h2><p>访问www.gdown.top网址,并查看access_log文件,可以看到ip是127.0.0.1在访问.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$  tail -f logs/localhost_access_log.2017-02-16.txt </div><div class="line">127.0.0.1 - - [16/Feb/2017:11:27:42 -0500] &quot;GET / HTTP/1.0&quot; 200 17065</div><div class="line">127.0.0.1 - - [16/Feb/2017:11:27:48 -0500] &quot;GET /diskInfo/get HTTP/1.0&quot; 200 79</div><div class="line">127.0.0.1 - - [16/Feb/2017:11:29:33 -0500] &quot;GET / HTTP/1.0&quot; 200 17065</div><div class="line">127.0.0.1 - - [16/Feb/2017:11:33:44 -0500] &quot;GET / HTTP/1.0&quot; 200 17065</div><div class="line">127.0.0.1 - - [16/Feb/2017:11:35:37 -0500] &quot;GET / HTTP/1.0&quot; 200 17065</div><div class="line">127.0.0.1 - - [16/Feb/2017:11:35:42 -0500] &quot;GET / HTTP/1.0&quot; 200 17065</div></pre></td></tr></table></figure></p>
+<p>说明Nginx是在运作的.接着后面需要将真实的ip显示出来.</p>
+<h3 id="3-1修改tomcat的server-xml配置文件"><a href="#3-1修改tomcat的server-xml配置文件" class="headerlink" title="3.1修改tomcat的server.xml配置文件"></a>3.1修改tomcat的server.xml配置文件</h3><p>找到如下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot;</div><div class="line">               prefix=&quot;localhost_access_log.&quot; suffix=&quot;.txt&quot;</div><div class="line">               pattern=&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<p>修改成如下即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot;</div><div class="line">               prefix=&quot;localhost_access_log.&quot; suffix=&quot;.txt&quot;</div><div class="line">               pattern=&quot;%&#123;X-Real-IP&#125;i %l %u %t &amp;quot;%r&amp;quot; %s %b&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<p>现在可以显示真实的ip.了</p>
+<h3 id="3-2-制造故障"><a href="#3-2-制造故障" class="headerlink" title="3.2 制造故障."></a>3.2 制造故障.</h3><p>现在,我们将主服务器shutdown.再访问www.gdown.top<br>在主服务器停掉的情况下,依然可以访问www.gdown.top,而查看后台日志可以发现.访问的ip地址是主服务器转发过来的.<br>所以Nginx是设置成功的.</p>
+<h2 id="4-结束"><a href="#4-结束" class="headerlink" title="4.结束"></a>4.结束</h2><p>上面仅仅展示了故障转移的功能.而Nginx的负载均衡则是通过上述所说的权重等手段进行.<br>而通过了故障转移后,还得解决的问题还有session的共享,文件服务器的差异等等.</p>
+<p><strong>错误信息!</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 注意,由于安装Nginx时候会使用到perl,所以需要将本地编码环境改成C.不然会出错.</div><div class="line"># 由于安装Nginx时候会默认启动Nginx,而Nginx又是默认启动在80端口上,所以假如安装出错,请检查一下这个原因.</div><div class="line">export LC_ALL=&apos;C&apos;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/架构之路/" rel="tag"># 架构之路</a>
+          
+            <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          
+            <a href="/tags/Tomcat/" rel="tag"># Tomcat</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/04/架构之路-0-SSM框架搭建/" rel="next" title="架构之路(0)-SSM框架搭建">
+                <i class="fa fa-chevron-left"></i> 架构之路(0)-SSM框架搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Cry Rain" />
+          <p class="site-author-name" itemprop="name">Cry Rain</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xinuo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-环境配置"><span class="nav-number">1.</span> <span class="nav-text">0. 环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前言"><span class="nav-number">2.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-安装-amp-配置"><span class="nav-number">3.</span> <span class="nav-text">2.安装&配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Nginx的安装"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 Nginx的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-配置故障转移"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 配置故障转移.</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-配置Nginx-conf"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.2.1 配置Nginx.conf</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-验证"><span class="nav-number">4.</span> <span class="nav-text">3.验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1修改tomcat的server-xml配置文件"><span class="nav-number">4.1.</span> <span class="nav-text">3.1修改tomcat的server.xml配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-制造故障"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 制造故障.</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-结束"><span class="nav-number">5.</span> <span class="nav-text">4.结束</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cry Rain</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
